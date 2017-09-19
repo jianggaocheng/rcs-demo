@@ -8,7 +8,7 @@ app.use('/vue-admin/static', express.static('./dist/static'));
 
 
 http.createServer(app).listen(3600, function() {
-    console.debug("Listening on port " + 3600);
+    console.log("Listening on port " + 3600);
 }).on('error', function(e) {
     if (e) {
         console.error(e);
