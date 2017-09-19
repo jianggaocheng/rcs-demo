@@ -68,6 +68,7 @@
 				</div>
 			</section>
 		</el-col>
+		
 	</el-row>
 </template>
 
@@ -75,7 +76,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'RCS DEMO',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
@@ -89,6 +90,7 @@
 					resource: '',
 					desc: ''
 				}
+				
 			}
 		},
 		methods: {
@@ -123,7 +125,8 @@
 			},
 			showMenu(i,status){
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
-			}
+			},
+			
 		},
 		mounted() {
 			var user = sessionStorage.getItem('user');

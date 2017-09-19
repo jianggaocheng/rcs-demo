@@ -3,6 +3,8 @@ import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 import Table from './views/nav1/Table.vue'
+import Room from './views/Room.vue'
+import RoomType from './views/RoomType.vue'
 import Form from './views/nav1/Form.vue'
 import user from './views/nav1/user.vue'
 import Page4 from './views/nav2/Page4.vue'
@@ -27,23 +29,21 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '导航一',
+        name: '首页',
         iconCls: 'el-icon-message',//图标样式class
+        leaf: true,//只有一个节点
         children: [
-            { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/table', component: Table, name: 'Table' },
-            { path: '/form', component: Form, name: 'Form' },
-            { path: '/user', component: user, name: '列表' },
+            { path: '/main', component: Main, name: '主页' },
         ]
     },
     {
         path: '/',
         component: Home,
-        name: '导航二',
+        name: '客房管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '页面4' },
-            { path: '/page5', component: Page5, name: '页面5' }
+            { path: '/room', component: Room, name: '房间管理' },
+            { path: '/roomType', component: RoomType, name: '房间类型管理' }
         ]
     },
     {
@@ -53,7 +53,7 @@ let routes = [
         iconCls: 'fa fa-address-card',
         leaf: true,//只有一个节点
         children: [
-            { path: '/page6', component: Page6, name: '导航三' }
+            { path: '/user', component: Table, name: '用户管理' }
         ]
     },
     {
@@ -61,8 +61,9 @@ let routes = [
         component: Home,
         name: 'Charts',
         iconCls: 'fa fa-bar-chart',
+        leaf: true,//只有一个节点
         children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/echarts', component: echarts, name: '报表统计' }
         ]
     },
     {

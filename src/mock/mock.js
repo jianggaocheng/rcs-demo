@@ -1,6 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LoginUsers, Users } from './data/user';
+import { LoginUsers, Users  } from './data/user';
+import { Rooms } from './data/room';
+let _Rooms = Rooms;
 let _Users = Users;
 
 export default {
@@ -139,6 +141,105 @@ export default {
         age: age,
         birth: birth,
         sex: sex
+      });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '新增成功'
+          }]);
+        }, 500);
+      });
+    });
+
+    //获取房间列表
+    mock.onGet('/room/list').reply(config => {
+      let {roomNum} = config.params;
+      let mockRooms = _Rooms.filter(room => {
+        if (roomNum && room.roomNum.indexOf(roomNum) == -1) return false;
+        return true;
+      });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            rooms: mockRooms
+          }]);
+        }, 1000);
+      });
+    });
+
+    //获取用户列表（分页）
+    mock.onGet('/room/listpage').reply(config => {
+      let {page, roomNum} = config.params;
+      let mockRooms = _Rooms.filter(room => {
+        if (roomNum && room.roomNum.indexOf(roomNum) == -1) return false;
+        return true;
+      });
+      let total = mockRooms.length;
+      mockRooms = mockRooms.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            total: total,
+            rooms: mockRooms
+          }]);
+        }, 1000);
+      });
+    });
+
+    //删除用户
+    mock.onGet('/room/remove').reply(config => {
+      let { id } = config.params;
+      _Users = _Rooms.filter(u => u.id !== id);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '删除成功'
+          }]);
+        }, 500);
+      });
+    });
+
+    //批量删除用户
+    mock.onGet('/room/batchremove').reply(config => {
+      let { ids } = config.params;
+      ids = ids.split(',');
+      _Rooms = _Rooms.filter(u => !ids.includes(u.id));
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '删除成功'
+          }]);
+        }, 500);
+      });
+    });
+
+    //编辑用户
+    mock.onGet('/room/edit').reply(config => {
+      let { id, roomNum} = config.params;
+      _Rooms.some(u => {
+        if (u.id === id) {
+          u.roomNum = roomNum;
+          return true;
+        }
+      });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '编辑成功'
+          }]);
+        }, 500);
+      });
+    });
+
+    //新增用户
+    mock.onGet('/room/add').reply(config => {
+      let { roomNum } = config.params;
+      _Rooms.push({
+        roomNum: roomNum,
       });
       return new Promise((resolve, reject) => {
         setTimeout(() => {
